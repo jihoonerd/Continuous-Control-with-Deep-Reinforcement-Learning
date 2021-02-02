@@ -13,7 +13,7 @@ display.start()
 env = gym.make('LunarLanderContinuous-v2')
 np.random.seed(0)
 
-agent = Agent(lr_actor=0.0001, lr_critic=0.001, input_dims=[8], tau=0.001, batch_size=64,
+agent = Agent(lr_actor=0.000025, lr_critic=0.00025, input_dims=[8], tau=0.001, batch_size=64,
               layer1_size=400, layer2_size=300, n_actions=2)
 
 score_history = []
