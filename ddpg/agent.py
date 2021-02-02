@@ -44,9 +44,6 @@ class Agent:
         self.actor.train()  # Recover model mode
         return mu_w_noise.numpy()
 
-    def push(self, state, action, reward, next_state, done):
-        self.memory.push(state, action, reward, next_state, done)
-
     def learn(self):
 
         # If memory is not big enough to train, skip it.
