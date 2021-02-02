@@ -9,7 +9,7 @@ Following shows that DDPG can solve one of the continuous action space environme
 |![eps-0](assets/eps-0.gif)|![eps-500](assets/eps-500.gif)|![eps-900](assets/eps-900.gif)|
 
 ## Score Graph for `LunarLanderContinuous-v2`
-<img src="assets/score_fig.png" width="300" height="300">
+<img src="assets/score_fig.png" width="50%" height="50%">
 
 ## Environments
 
