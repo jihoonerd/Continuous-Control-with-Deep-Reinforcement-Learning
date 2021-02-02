@@ -12,7 +12,7 @@ display.start()
 
 env = gym.make('LunarLanderContinuous-v2')
 
-agent = Agent(lr_actor=0.000025, lr_critic=0.00025, input_dims=[8], tau=0.001, batch_size=64,
+agent = Agent(lr_actor=0.0001, lr_critic=0.001, input_dims=[8], tau=0.001, batch_size=64,
               layer1_size=400, layer2_size=300, n_actions=2)
 
 score_history = []
@@ -54,9 +54,8 @@ for i in range(1000):
 
     if i % 50 == 0:
         agent.save_models()
-
-plt.plot(score_history)
-plt.xlabel('episodes')
-plt.ylabel('score')
-plt.grid()
-plt.savefig(os.path.join(img_path, "score_fig.png"))
+        plt.plot(score_history)
+        plt.xlabel('episodes')
+        plt.ylabel('score')
+        plt.grid()
+        plt.savefig(os.path.join(img_path, "score_fig.png"))

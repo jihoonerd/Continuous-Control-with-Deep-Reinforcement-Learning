@@ -64,12 +64,15 @@ class Agent:
         self.critic.eval()
 
         target_actions = self.target_actor.forward(next_state)
-        critic_value_next = self.target_critic.forward(next_state, target_actions)
-        critic_value = self.critic.forward(state, action) # previous value, to be updated.
+        critic_value_next = self.target_critic.forward(
+            next_state, target_actions)
+        # previous value, to be updated.
+        critic_value = self.critic.forward(state, action)
 
         critic_target = []
         for j in range(self.batch_size):
-            critic_target.append(reward[j] + self.gamma * critic_value_next[j] * done[j])
+            critic_target.append(
+                reward[j] + self.gamma * critic_value_next[j] * done[j])
 
         critic_target = T.tensor(critic_target).to(self.critic.device)
         critic_target = critic_target.view(self.batch_size, 1)
@@ -80,13 +83,14 @@ class Agent:
         critic_loss = F.mse_loss(critic_target, critic_value)
         critic_loss.backward()
         self.critic.optimizer.step()
-        self.critic.eval() # now, freeze it for actor update
+        self.critic.eval()  # now, freeze it for actor update
 
         # now update actor network
         self.actor.train()
         self.actor.optimizer.zero_grad()
         mu = self.actor.forward(state)
-        actor_q = self.critic.forward(state, mu) # output of critic is Q value, which needs to be maximized. Therefore put negative sign to this to minimize.
+        # output of critic is Q value, which needs to be maximized. Therefore put negative sign to this to minimize.
+        actor_q = self.critic.forward(state, mu)
         actor_loss = T.mean(-actor_q)
         actor_loss.backward()
         self.actor.optimizer.step()
