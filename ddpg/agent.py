@@ -42,7 +42,7 @@ class Agent:
         mu_w_noise = mu + T.tensor(self.noise(),
                                    dtype=T.float).to(self.actor.device)
         self.actor.train()  # Recover model mode
-        return mu_w_noise.numpy()
+        return mu_w_noise.detach().numpy()
 
     def learn(self):
 
@@ -50,7 +50,7 @@ class Agent:
         if self.memory.total_count < self.batch_size:
             return
 
-        state, action, reward, next_state, done = self.memory.sample_buffer(
+        state, action, reward, next_state, done = self.memory.get_minibatch(
             self.batch_size)
         reward = T.tensor(reward, dtype=T.float).to(self.critic.device)
         done = T.tensor(done).to(self.critic.device)
@@ -89,9 +89,9 @@ class Agent:
         actor_q = self.critic.forward(state, mu) # output of critic is Q value, which needs to be maximized. Therefore put negative sign to this to minimize.
         actor_loss = T.mean(-actor_q)
         actor_loss.backward()
-        self.actor.optimizer.step(self.tau)
+        self.actor.optimizer.step()
 
-        self.update_network_parameters()
+        self.update_network_parameters(self.tau)
 
     def update_network_parameters(self, tau):
 
