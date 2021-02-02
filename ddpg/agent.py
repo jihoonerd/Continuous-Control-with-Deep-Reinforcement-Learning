@@ -42,7 +42,7 @@ class Agent:
         mu_w_noise = mu + T.tensor(self.noise(),
                                    dtype=T.float).to(self.actor.device)
         self.actor.train()  # Recover model mode
-        return mu_w_noise.detach().numpy()
+        return mu_w_noise.cpu().detach().numpy()
 
     def learn(self):
 
