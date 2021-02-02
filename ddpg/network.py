@@ -10,13 +10,15 @@ import torch.optim as optim
 
 class ActorNetwork(nn.Module):
 
-    def __init__(self, learning_rate, input_dims, fc1_dims, fc2_dims, n_actions, ckpt_dir='ckpt'):
+    def __init__(self, learning_rate, input_dims, fc1_dims, fc2_dims, n_actions, name, ckpt_dir='ckpt'):
         super().__init__()
-        self.input_dims = input_dims
-        self.n_actions = n_actions
+        self.learning_rate = learning_rate
         self.fc1_dims = fc1_dims
         self.fc2_dims = fc2_dims
-        self.checkpoint_file = os.path.join(ckpt_dir, 'actor_ddpg_ckpt')
+        self.input_dims = input_dims
+        self.n_actions = n_actions
+        self.name = name
+        self.checkpoint_file = os.path.join(ckpt_dir, self.name + 'actor_ddpg_ckpt')
 
         # first dense layer
         self.fc1 = nn.Linear(*self.input_dims, self.fc1_dims)
@@ -74,11 +76,13 @@ class CriticNetwork(nn.Module):
 
     def __init__(self, learning_rate, input_dims, fc1_dims, fc2_dims, n_actions, name, ckpt_dir='ckpt'):
         super().__init__()
+        self.learning_rate = learning_rate
         self.input_dims = input_dims
         self.fc1_dims = fc1_dims
         self.fc2_dims = fc2_dims
         self.n_actions = n_actions
-        self.checkpoint_file = os.path.join(ckpt_dir, name+'critic_ddpg_ckpt')
+        self.name = name
+        self.checkpoint_file = os.path.join(ckpt_dir, self.name + 'critic_ddpg_ckpt')
 
         # first dense layer
         self.fc1 = nn.Linear(*self.input_dims, self.fc1_dims)
