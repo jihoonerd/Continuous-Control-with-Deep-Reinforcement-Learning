@@ -27,7 +27,7 @@ pyparsing==2.4.7
 pytest==6.2.2
 python-dateutil==2.8.1
 PyVirtualDisplay==2.0
-scipy==1.6.0
+scipy==1.10.0
 six==1.15.0
 toml==0.10.2
 torch==1.7.1+cpu
